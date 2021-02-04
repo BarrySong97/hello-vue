@@ -1,19 +1,25 @@
 <template>
-  <button @click="handleClick">{{buttonName}}</button>
+  <button >{{ buttonName }}</button>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 
 @Component({
-  methods: {
-    handleClick(event) {
-      this.$emit("move", event);
-    },
-  },
+  inject: ["name"],
+  name: "myButton"
 })
 export default class Home extends Vue {
-    @Prop()
-    protected buttonName!: string;
+  @Prop()
+  protected buttonName!: string;
+  
+ 
+  created() {
+    this.$on("on-message",(msg: string) => {alert(msg)});
+  }
+
+  handleClick() {
+    this.$emit("move", "barry song");
+  }
 }
 </script>
